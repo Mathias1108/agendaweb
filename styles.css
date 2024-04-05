@@ -1,0 +1,45 @@
+.barbers {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.barber {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.barber p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: 'Roboto Condensed', sans-serif; /* Usar Roboto Condensed como fuente */
+}
+
+.horarios {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* styles.css */
+.horarios span {
+  background-color: #000; /* Color de fondo negro */
+  color: #fff; /* Color de texto blanco */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin: 5px;
+  font-size: 24px; /* Aumentar el tamaño de la fuente */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; /* Utilizar la fuente de iPhone */
+  cursor: pointer;
+}
+
+
+.horarios span.clicked {
+  background-color: #0f0; /* Cambiar el color al verde cuando se hace clic */
+
+}
+
+.horarios span.clicked.green {
+  background-color: green;
+}
