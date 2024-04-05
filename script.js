@@ -26,9 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
       horarios.forEach(horario => {
         const span = document.createElement('span');
         span.textContent = horario;
+        
+        // Verificar si hay un color guardado para este horario
+        const savedColor = localStorage.getItem(`${barber.name}-${horario}`);
+        if (savedColor) {
+          span.style.backgroundColor = savedColor;
+        }
+        
         span.addEventListener('click', function() {
-          span.classList.toggle('clicked');
-          span.classList.toggle('green');
+          const currentColor = span.style.backgroundColor;
+          const newColor = currentColor === 'green' ? '' : 'green';
+          span.style.backgroundColor = newColor;
+          
+          // Guardar el color modificado en el almacenamiento local
+          localStorage.setItem(`${barber.name}-${horario}`, newColor);
         });
         horariosElement.appendChild(span);
       });
