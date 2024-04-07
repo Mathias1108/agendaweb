@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
       barberElement.classList.add('barber');
       barberElement.innerHTML = `
         <p>${barber.name}</p>
+        <button class="reset-button">Reiniciar</button>
       `;
       const horariosElement = document.createElement('div');
       horariosElement.classList.add('horarios');
@@ -45,6 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       barberElement.appendChild(horariosElement);
       barbersList.appendChild(barberElement);
+
+      // Agregar evento clic al botón "Reiniciar"
+      const resetButton = barberElement.querySelector('.reset-button');
+      resetButton.addEventListener('click', function() {
+        horariosElement.querySelectorAll('span').forEach(span => {
+          span.style.backgroundColor = '#000'; // Color inicial negro
+          const horario = span.textContent;
+          localStorage.setItem(`${barber.name}-${horario}`, ''); // Limpiar el almacenamiento local
+        });
+      });
     });
   }
 
