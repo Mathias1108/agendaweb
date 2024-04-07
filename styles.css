@@ -1,3 +1,5 @@
+/* styles.css */
+
 .barbers {
   max-width: 800px;
   margin: 0 auto;
@@ -21,7 +23,6 @@
   flex-wrap: wrap;
 }
 
-/* styles.css */
 .horarios span {
   background-color: #000; /* Color de fondo negro */
   color: #fff; /* Color de texto blanco */
@@ -34,8 +35,30 @@
   cursor: pointer;
 }
 
-
 .horarios span.clicked {
   background-color: #0f0; /* Cambiar el color al verde cuando se hace clic */
-
 }
+
+.horarios span.clicked.green {
+  background-color: green;
+}
+
+/* Agregar estilos para el botón "Reiniciar" */
+.reset-button {
+  background-color: #f44336; /* Color rojo */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 10px; /* Espaciado entre el nombre del barbero y el botón */
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: #d32f2f; /* Color rojo oscuro cuando se pasa el mouse sobre el botón */
+}
+
