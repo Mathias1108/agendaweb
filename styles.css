@@ -1,45 +1,64 @@
-.barbers {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
+document.addEventListener('DOMContentLoaded', function() {
+  const barbersList = document.getElementById('barbers-list');
 
-.barber {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-.barber p {
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-family: 'Roboto Condensed', sans-serif; /* Usar Roboto Condensed como fuente */
-}
+  // Nombres de los barberos
+  const barbersData = [
+    { name: 'Mathias', availability: true },
+    { name: 'Santiago', availability: true },
+    { name: 'Mauricio', availability: true },
+    { name: 'Kevin', availability: true },
+    { name: 'Lea', availability: true }
+  ];
 
-.horarios {
-  display: flex;
-  flex-wrap: wrap;
-}
+  const horarios = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
 
-/* styles.css */
-.horarios span {
-  background-color: #000; /* Color de fondo negro */
-  color: #fff; /* Color de texto blanco */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 8px 15px;
-  margin: 5px;
-  font-size: 24px; /* Aumentar el tamaño de la fuente */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; /* Utilizar la fuente de iPhone */
-  cursor: pointer;
-}
+  // Función para renderizar los barberos
+  function renderBarbers() {
+    barbersList.innerHTML = '';
+    barbersData.forEach(barber => {
+      const barberElement = document.createElement('div');
+      barberElement.classList.add('barber');
+      barberElement.innerHTML = `
+        <p>${barber.name}</p>
+        <button class="reset-button">Reiniciar</button>
+      `;
+      const horariosElement = document.createElement('div');
+      horariosElement.classList.add('horarios');
+      horarios.forEach(horario => {
+        const span = document.createElement('span');
+        span.textContent = horario;
+        
+        // Verificar si hay un color guardado para este horario
+        const savedColor = localStorage.getItem(`${barber.name}-${horario}`);
+        if (savedColor) {
+          span.style.backgroundColor = savedColor;
+        }
+        
+        span.addEventListener('click', function() {
+          const currentColor = span.style.backgroundColor;
+          const newColor = currentColor === 'green' ? '' : 'green';
+          span.style.backgroundColor = newColor;
+          
+          // Guardar el color modificado en el almacenamiento local
+          localStorage.setItem(`${barber.name}-${horario}`, newColor);
+        });
+        horariosElement.appendChild(span);
+      });
+      barberElement.appendChild(horariosElement);
+      barbersList.appendChild(barberElement);
 
+      // Agregar evento clic al botón "Reiniciar"
+      const resetButton = barberElement.querySelector('.reset-button');
+      resetButton.addEventListener('click', function() {
+        horariosElement.querySelectorAll('span').forEach(span => {
+          span.style.backgroundColor = '#000'; // Color inicial negro
+          const horario = span.textContent;
+          localStorage.setItem(`${barber.name}-${horario}`, ''); // Limpiar el almacenamiento local
+        });
+      });
+    });
+  }
 
-.horarios span.clicked {
-  background-color: #0f0; /* Cambiar el color al verde cuando se hace clic */
-
-}
-
-.horarios span.clicked.green {
-  background-color: green;
-}
+  // Renderizar barberos al cargar la página
+  renderBarbers();
+});
