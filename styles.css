@@ -1,64 +1,97 @@
-/* styles.css */
-
-.barbers {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
 }
 
-.barber {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-.barber p {
-  font-size: 18px;
-  margin-bottom: 10px;
-  font-family: 'Roboto Condensed', sans-serif; /* Usar Roboto Condensed como fuente */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-.horarios {
-  display: flex;
-  flex-wrap: wrap;
+h1 {
+    text-align: center;
+    color: #4A90E2;
 }
 
-.horarios span {
-  background-color: #000; /* Color de fondo negro */
-  color: #fff; /* Color de texto blanco */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 8px 15px;
-  margin: 5px;
-  font-size: 24px; /* Aumentar el tamaño de la fuente */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; /* Utilizar la fuente de iPhone */
-  cursor: pointer;
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.horarios span.clicked {
-  background-color: #0f0; /* Cambiar el color al verde cuando se hace clic */
+.day {
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.horarios span.clicked.green {
-  background-color: green;
+.day:hover {
+    background-color: #e6f7ff;
+    transform: scale(1.05);
 }
 
-/* Agregar estilos para el botón "Reiniciar" */
-.reset-button {
-  background-color: #f44336; /* Color rojo */
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-left: 10px; /* Espaciado entre el nombre del barbero y el botón */
-  cursor: pointer;
+.hidden {
+    display: none;
 }
 
-.reset-button:hover {
-  background-color: #d32f2f; /* Color rojo oscuro cuando se pasa el mouse sobre el botón */
+h2 {
+    margin-top: 20px;
+    color: #4A90E2;
 }
 
+input[type="text"],
+input[type="number"] {
+    width: calc(33% - 10px);
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+#events-list {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+    border-bottom: none;
+}
