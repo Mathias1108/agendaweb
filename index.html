@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barberos</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="barbers">
-    <h1>Barberos</h1>
-    <div id="barbers-list"></div>
-  </div>
-
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Calendario</h1>
+        <div id="calendar"></div>
+        <div id="event-form" class="hidden">
+            <h2>Agregar Evento</h2>
+            <input type="text" id="event-name" placeholder="Nombre del evento">
+            <input type="number" id="event-hour" min="9" max="20" placeholder="Hora (9-20)">
+            <input type="number" id="event-minute" min="0" max="59" placeholder="Minuto (0-59)">
+            <button id="add-event">Agregar Evento</button>
+            <button id="clear-events">Borrar Eventos del Día</button>
+        </div>
+        <div id="events-list" class="hidden">
+            <h2>Eventos del Día</h2>
+            <ul id="event-output"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
+
 
