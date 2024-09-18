@@ -1,64 +1,89 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const barbersList = document.getElementById('barbers-list');
+const calendar = document.getElementById('calendar');
+const eventForm = document.getElementById('event-form');
+const eventOutput = document.getElementById('event-output');
+const eventsList = document.getElementById('events-list');
+let selectedDate;
+let events = {};
 
-  // Nombres de los barberos
-  const barbersData = [
-    { name: 'Mathias', availability: true },
-    { name: 'Santiago', availability: true },
-    { name: 'Mauricio', availability: true },
-    { name: 'Kevin', availability: true },
-    { name: 'Lea', availability: true }
-  ];
+// Cargar eventos desde localStorage al iniciar
+function loadEvents() {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+        events = JSON.parse(storedEvents);
+    }
+}
 
-  const horarios = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+function generateCalendar(year, month) {
+    const date = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDayIndex = date.getDay();
 
-  // Función para renderizar los barberos
-  function renderBarbers() {
-    barbersList.innerHTML = '';
-    barbersData.forEach(barber => {
-      const barberElement = document.createElement('div');
-      barberElement.classList.add('barber');
-      barberElement.innerHTML = `
-        <p>${barber.name}</p>
-        <button class="reset-button">Reiniciar</button>
-      `;
-      const horariosElement = document.createElement('div');
-      horariosElement.classList.add('horarios');
-      horarios.forEach(horario => {
-        const span = document.createElement('span');
-        span.textContent = horario;
-        
-        // Verificar si hay un color guardado para este horario
-        const savedColor = localStorage.getItem(`${barber.name}-${horario}`);
-        if (savedColor) {
-          span.style.backgroundColor = savedColor;
-        }
-        
-        span.addEventListener('click', function() {
-          const currentColor = span.style.backgroundColor;
-          const newColor = currentColor === 'green' ? '' : 'green';
-          span.style.backgroundColor = newColor;
-          
-          // Guardar el color modificado en el almacenamiento local
-          localStorage.setItem(`${barber.name}-${horario}`, newColor);
-        });
-        horariosElement.appendChild(span);
-      });
-      barberElement.appendChild(horariosElement);
-      barbersList.appendChild(barberElement);
+    calendar.innerHTML = '';
 
-      // Agregar evento clic al botón "Reiniciar"
-      const resetButton = barberElement.querySelector('.reset-button');
-      resetButton.addEventListener('click', function() {
-        horariosElement.querySelectorAll('span').forEach(span => {
-          span.style.backgroundColor = '#000'; // Color inicial negro
-          const horario = span.textContent;
-          localStorage.setItem(`${barber.name}-${horario}`, ''); // Limpiar el almacenamiento local
-        });
-      });
-    });
-  }
+    for (let i = 0; i < firstDayIndex; i++) {
+        const emptyDay = document.createElement('div');
+        calendar.appendChild(emptyDay);
+    }
 
-  // Renderizar barberos al cargar la página
-  renderBarbers();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayElement = document.createElement('div');
+        dayElement.classList.add('day');
+        dayElement.textContent = day;
+        dayElement.addEventListener('click', () => selectDate(day));
+        calendar.appendChild(dayElement);
+    }
+}
+
+function selectDate(day) {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    selectedDate = new Date(year, month, day);
+    eventForm.classList.remove('hidden');
+    eventsList.classList.remove('hidden');
+    displayEvents();
+}
+
+document.getElementById('add-event').addEventListener('click', () => {
+    const name = document.getElementById('event-name').value;
+    const hour = document.getElementById('event-hour').value;
+    const minute = document.getElementById('event-minute').value;
+
+    if (name && hour && minute) {
+        const dateKey = selectedDate.toISOString().split('T')[0];
+        if (!events[dateKey]) events[dateKey] = [];
+        events[dateKey].push({ name, time: `${hour}:${minute}` });
+
+        // Guardar en localStorage
+        localStorage.setItem('events', JSON.stringify(events));
+
+        // Limpiar el formulario
+        document.getElementById('event-name').value = '';
+        document.getElementById('event-hour').value = '';
+        document.getElementById('event-minute').value = '';
+        displayEvents();
+    }
 });
+
+document.getElementById('clear-events').addEventListener('click', () => {
+    const dateKey = selectedDate.toISOString().split('T')[0];
+    delete events[dateKey]; // Borrar eventos del día seleccionado
+    localStorage.setItem('events', JSON.stringify(events)); // Actualizar localStorage
+    displayEvents(); // Actualizar la visualización de eventos
+});
+
+function displayEvents() {
+    const dateKey = selectedDate.toISOString().split('T')[0];
+    eventOutput.innerHTML = '';
+
+    if (events[dateKey]) {
+        events[dateKey].forEach(event => {
+            const li = document.createElement('li');
+            li.textContent = `${event.name} - ${event.time}`;
+            eventOutput.appendChild(li);
+        });
+    }
+}
+
+// Inicializar el calendario y cargar eventos
+loadEvents();
+generateCalendar(new Date().getFullYear(), new Date().getMonth());
